@@ -123,7 +123,7 @@ digit0.addEventListener('click', ( () => {
 }));
 
 //Operation button listeners
-const clear = document.querySelector('#clear');
+const clear = document.querySelector('#clearBtn');
 clear.addEventListener('click', () => clearDisplay()); 
 
 const addButton = document.querySelector('#add');
