@@ -1,19 +1,3 @@
-//when digits are clicked, need them to concatenate in the display.
-//when an operator is clicked, need to:
-    //store the display number as a variable, 
-    //store the operator clicked,
-    //clear the dsplay
-//when clear is clicked, need to clear the display and all stores variables.
-//when equals is clicked, need to run the operation and display the results.
-
-//wow this should be way easier to do with strings.
-//a running total storing all numbers and strings ought to do it.
-    //if we use an array of strings, we can reduce the array all at once to get the result.
-    //nope, problem is that there is no good way to convert the string of an operator to an actual operator. back to functions...
-
-//so we still need a running total variable that starts at 0. Digits do the same thing.
-//when an operator is clicked, we can perform that function on the running total with whatever number is currently in the display?
-
     //hmm. Or we could track the last operator clicked, and operate as needed?
         //so it starts as nothing. user clicks 123, display shows 123. Then they click add. Then...
             //if lastOperatorClicked == 0, 
@@ -28,10 +12,9 @@
     
 //Global variables declared:
 let lastOperatorClicked = 0;
-let num1 = "";
-let num2 = "";
-let operator = 0;
-let operationsArray = [];
+let num1 = 0;
+let num2 = 0;
+let sum = 0;
 
 
 let calcDisplay = document.querySelector('#calculatorWindow');
@@ -68,22 +51,29 @@ addButton.addEventListener('click', () => {
         clearDisplay();
     } else {
         num2 = parseInt(calcDisplay.textContent, 10);
-        num1 = operate();
+        operate();
         lastOperatorClicked = '+';
-        calcDisplay.textContent = num1.toString();
     }
 })
 
 const equalsButton = document.querySelector('#equals');
 equalsButton.addEventListener('click', () => {
-    operate();
+    if (lastOperatorClicked !== 0) {
+        num2 = parseInt(calcDisplay.textContent, 10);
+        num1 = operate();
+        lastOperatorClicked = 0;
+    }    
 });
 
 
 
 //Functions ready to be called:
 function add() {
-    return num1 + num2;
+    console.log('num1 is ' + num1);
+    console.log('num2 is ' + num2);
+    let sum = num1 + num2;
+    console.log(sum);
+    calcDisplay.textContent = sum;
 }
 
 function subtract() {
@@ -121,29 +111,32 @@ function clearDisplay() {
 
 //Here is the operate function using a switch case. WIP
 function operate() {
+    console.log(lastOperatorClicked);
     switch (lastOperatorClicked) {
         case '+':
             add();
-
+            break;
         case '-':
             subtract();
-            
+            break;
         case '*':
             multiply();
-
+            break;
         case '/':
             divide();
-
+            break;
         default:
             return "Something went horribly wrong!";
     }
 }
 
 
-function equals() {
-    
+function logVariables() {
+    console.log("sum is " + sum);
+    console.log("num1 is " + num1);
+    console.log("num2 is " + num2);
+    console.log("calcDisplay.textContent is " + calcDisplay.textContent);
 }
 
 
-
-calcDisplay.textContent = "Now the results are different";
+calcDisplay.textContent = "";
