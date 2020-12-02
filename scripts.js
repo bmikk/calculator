@@ -1,17 +1,7 @@
-    //hmm. Or we could track the last operator clicked, and operate as needed?
-        //so it starts as nothing. user clicks 123, display shows 123. Then they click add. Then...
-            //if lastOperatorClicked == 0, 
-                //set lastOperatorClicked to '+' and...
-                //display number gets set as num1.
-                //clear the display.
-            //if lastOperatorClicked == (anything but 0)...
-                //this means that there is a num1 already, so set num2 to current display number
-                //operate num1 and num2 by appropriate operator
-                    //result becomes the new num1
-                //set the display to num1
+
     
 //Global variables declared:
-let lastOperatorClicked = 0;
+let lastOperatorClicked = '=';
 let num1 = 0;
 let num2 = 0;
 let sum = 0;
@@ -21,7 +11,7 @@ let calcDisplay = document.querySelector('#calculatorWindow');
 
 //Number button listeners:
 const clear = document.querySelector('#clear');
-clear.addEventListener('click', ( () => calcDisplay.textContent = "")); //on each of these, need to add a condition where if an operation was just performed, reset the display and then add the string
+clear.addEventListener('click', () => clearDisplay()); //on each of these, need to add a condition where if an operation was just performed, reset the display and then add the string
 const digit1 = document.querySelector('#digit1');
 digit1.addEventListener('click', ( () => calcDisplay.textContent += "1"));
 const digit2 = document.querySelector('#digit2');
@@ -45,73 +35,101 @@ digit0.addEventListener('click', ( () => calcDisplay.textContent += "0"));
 
 const addButton = document.querySelector('#add');
 addButton.addEventListener('click', () => {
-    if (lastOperatorClicked == 0) {
+    if (lastOperatorClicked == '=') {
         lastOperatorClicked = '+';
         num1 = parseInt(calcDisplay.textContent, 10);
         clearDisplay();
     } else {
         num2 = parseInt(calcDisplay.textContent, 10);
         operate();
+        num1 = sum;
         lastOperatorClicked = '+';
     }
-})
+});
 
 const equalsButton = document.querySelector('#equals');
 equalsButton.addEventListener('click', () => {
-    if (lastOperatorClicked !== 0) {
+    if (lastOperatorClicked !== '=') {
         num2 = parseInt(calcDisplay.textContent, 10);
         num1 = operate();
-        lastOperatorClicked = 0;
+        lastOperatorClicked = '=';
+    } else {
+        clearDisplay();
     }    
 });
+
+
+//let's try something else for the buttons.
+//what it comes down to, is that when an operator button is clicked, we do this:
+    //if there's no number stored, we store it
+        //then we store the operator that was clicked (in case the equals sign is clicked)
+        //then we clear the display
+    //if there is a number stored, we need to: 
+        //operate that number with whatever is on the screen using the last clicked operator, and store the new number
+        //clear the display
+
+//then, when the equals button is clicked:
+    //simply operate the stored number with the screen number, and store it
+    //display the stored number
+    //set the last operator clicked to '=', or nothing, or 0 or something.
+    //reset the number variables so that we're ready for a new calculation.
+    //THIS LEAVES US WITH A PROBLEM. BECAUSE WE USE THE SCREEN AS A VARIABLE, WE ARE NOT READY FOR ANOTHER CALCULATION
+
+//How do we solve that? 
+    //If we use two variables, we don't need to use the screen, and it's ready to display whatever we need, whenever.
+        //if we do that, we should never operate using the screen content, only the second variable.
+        //we can use num2 as a running total, which we can display as needed on the screen
+
+
+//operator button click
+    //if num1 == 0:
+        //set num1 = displayNumber
+        //lastOperatorClicked = 'clicked operator'
+        //clear display
+    //if num1 !== 0:
+        //num2 = displayNumber
+        //sum = operate() num1 and num2
+        //set display to show sum
+        //num1 = sum
+        //set lastOperatorClicked to 'clicked operator
+
 
 
 
 //Functions ready to be called:
 function add() {
-    console.log('num1 is ' + num1);
-    console.log('num2 is ' + num2);
     let sum = num1 + num2;
-    console.log(sum);
+    logVariables();
     calcDisplay.textContent = sum;
 }
 
 function subtract() {
-    return num1 - num2;
+    sum = num1 - num2;
 }
 
 function multiply() {
-    return num1 * num2;
+    sum = num1 * num2;
 }
 
 function divide() {
-    return num1 / num2;
+    sum = num1 / num2;
 }
 
 function clearDisplay() {
     calcDisplay.textContent = "";
 }
 
-    //hmm. Or we could track the last operator clicked, and operate as needed?
-        //so it starts as nothing. user clicks 123, display shows 123. Then they click add. Then...
-            //if lastOperatorClicked == 0, 
-                //set lastOperatorClicked to '+' and...
-                //display number gets set as num1.
-                //clear the display.
-            //if lastOperatorClicked == (anything but 0)...
-                //this means that there is a num1 already, so set num2 to current display number
-                //operate num1 and num2 by appropriate operator
-                    //result becomes the new num1
-                //set the display to num1
-                //set lastOperatorClicked to 0
-
-//when equals is clicked, need to operate with existing values.
+// function calcReset() {
+//     calcDisplay.textContent = "";
+//     num1 = 0;
+//     num2 = 0;
+//     sum = 0;
+// }
 
 
 
 //Here is the operate function using a switch case. WIP
 function operate() {
-    console.log(lastOperatorClicked);
     switch (lastOperatorClicked) {
         case '+':
             add();
@@ -138,5 +156,4 @@ function logVariables() {
     console.log("calcDisplay.textContent is " + calcDisplay.textContent);
 }
 
-
-calcDisplay.textContent = "";
+calcDisplay.textContent = '';
