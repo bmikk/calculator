@@ -1,11 +1,30 @@
 .calculatorDisplay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: lightgray;
     grid-area: window;
-    text-align: center;
     font-size: 45px;
 }
 
+.operators {
+    background-color: lightblue;
+    font-size: 30px;
+}
+.operators:hover {
+    background-color: rgb(104, 192, 243);
+}
+
+.digits {
+    font-size: 30px;
+}
+
+#calcTitle {
+    text-align: center;
+}
+
 #container {
+    
     margin-left: auto;
     margin-right: auto;
     border: 5px solid black;
@@ -21,12 +40,11 @@
 
 #clearBtn {
     grid-area: clear;
+    font-size: 20px;
 }
 
 #backspaceBtn {
     grid-area: backspace;
+    font-size: 20px;
 }
 
-.operators {
-    background-color: lightblue;
-}

@@ -1,5 +1,14 @@
 
-    
+
+//REMEMBER TO CLEAN UP BEFORE PUBLISHING:
+    //REMOVE CONSOLE.LOGS
+    //IMPROVE CSS FONTS
+    //CHANGE PAGE BACKGROUND FROM PLAIN WHITE
+    //
+ 
+ 
+
+
 //Global variables declared:
 let lastOperatorClicked = '=';
 let num1;
@@ -9,6 +18,8 @@ let operationJustPerformed = false;
 
 
 let calcDisplay = document.querySelector('#calculatorWindow');
+
+
 
 //Number button listeners:
 const digit1 = document.querySelector('#digit1');
@@ -122,9 +133,16 @@ digit0.addEventListener('click', ( () => {
     }
 }));
 
+
+
 //Operation button listeners
-const clear = document.querySelector('#clearBtn');
-clear.addEventListener('click', () => clearDisplay()); 
+const clearButton = document.querySelector('#clearBtn');
+clearButton.addEventListener('click', () => clearDisplay()); 
+
+const backspaceButton = document.querySelector('#backspaceBtn');
+backspaceButton.addEventListener('click', () => {
+    calcDisplay.textContent = calcDisplay.textContent.slice(0, -1);
+}); 
 
 const addButton = document.querySelector('#add');
 addButton.addEventListener('click', () => {
@@ -224,27 +242,22 @@ function multiply() {
 }
 
 function divide() {
-    sum = num1 / num2;
-    calcDisplay.textContent = sum;
-    operationJustPerformed = true;
-    console.log("division performed");
-    logVariables();
+    if (num2 == 0) {
+        calcDisplay.textContent = "Learn to math!"
+        operationJustPerformed = false;
+    } else {
+        sum = num1 / num2;
+        calcDisplay.textContent = sum;
+        operationJustPerformed = true;
+        console.log("division performed");
+        logVariables();
+        }
 }
 
 function clearDisplay() {
     calcDisplay.textContent = "";
 }
 
-// function calcReset() {
-//     calcDisplay.textContent = "";
-//     num1 = 0;
-//     num2 = 0;
-//     sum = 0;
-// }
-
-
-
-//Here is the operate function using a switch case. WIP
 function operate() {
     switch (lastOperatorClicked) {
         case '+':
