@@ -1,14 +1,5 @@
 
 
-//REMEMBER TO CLEAN UP BEFORE PUBLISHING:
-    //REMOVE CONSOLE.LOGS
-    //IMPROVE CSS FONTS
-    //CHANGE PAGE BACKGROUND FROM PLAIN WHITE
-    //
- 
- 
-
-
 //Global variables declared:
 let lastOperatorClicked = '=';
 let num1;
@@ -217,7 +208,7 @@ equalsButton.addEventListener('click', () => {
 });
 
 
-//Functions ready to be called:
+//Simple calculator number functions:
 function add() {
     sum = num1 + num2;
     calcDisplay.textContent = sum;
